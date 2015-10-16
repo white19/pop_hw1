@@ -5,7 +5,7 @@
 	target: A driver of using queue
 	Author: Chiu-Hsin Lo
 	Date: 2015.10.15
-	Version: 1.0.0
+	Version: 1.1.0
 	method: en	Add node with the next input value
 			to the rear.
 
@@ -15,12 +15,16 @@
 
 		q	Quit.
 
+	1.1.0 prevent buffer overflow from input
+
 ===========================================================*/
 #include "queue.c"
 #include <string.h>
 
 int main(){
-	char commend[10];//recieve input commend
+	
+	char* tmp_commend = NULL;//recieve input commend
+	char commend[10];
 	DATA_TYPE v;//recieve input data
 	node* front;//front pointer
 	node* rear;//rear pointer
@@ -32,7 +36,21 @@ int main(){
 		printf("\tEnter \'en\' or \'de\' to enqueue or dequeue,"
 			"\'size\' to check queue size,"
 			 "\'q\' is to leave.\n");
-                scanf("%s", commend);//recieve cmd
+		if(scanf("%as", &tmp_commend)){
+                        if(strlen(tmp_commend) > 9){
+                                printf("Commend not found!!\n");
+                                continue;
+                        }
+                        strcpy(commend,tmp_commend);
+                        myfree(tmp_commend);
+                        //todo string copy
+
+
+                }else{
+                        printf("Aalloction fail!\n");
+                        exit(1);
+                }
+
 		//to en_queu
 		if(!strcmp(commend,"en")){
 			printf("\tEnter a value to push to the queue\n");

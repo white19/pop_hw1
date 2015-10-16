@@ -5,7 +5,9 @@
         target: Implement queue
         Author: Chiu-Hsin Lo
         Date: 2015.10.15
-        Version: 1.0.0
+        Version: 1.0.1
+
+	1.0.1 check stack empty again
 
 ===========================================================*/
 #include "queue.h"
@@ -43,13 +45,19 @@ DATA_TYPE de_queue(node** front){
 	DATA_TYPE to_return;
         node* tmp;
 
-        to_return = (*front)->data;
-	tmp = *front;
-	*front = (*front)->next;
-	myfree(tmp);
+	if(queue_empty(*front)){
+                                printf("The queue is empty!!!\n");
+                                exit(1);
+        }else{
+
+	        to_return = (*front)->data;
+		tmp = *front;
+		*front = (*front)->next;
+		myfree(tmp);
 
 	return to_return;
 
+	}
 
 }
 
