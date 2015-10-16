@@ -5,7 +5,9 @@
         target: Implemen stack
         Author: Chiu-Hsin Lo
         Date: 2015.10.09
-        Version: 1.0.0
+        Version: 1.0.1
+
+	1.0.1 check stack empty again
 
 ===========================================================*/
 #include "stack.h"
@@ -39,13 +41,19 @@ void push(node** top, DATA_TYPE value){
 DATA_TYPE pop(node** top){
 	DATA_TYPE to_return;
 	node* tmp;
+	
+	if(stack_empty(*top)){
+                                printf("The stack is empty!!!\n");
+				exit(1);
+        }else{
 
-	to_return = (*top)->data;
-	tmp = *top;
-	*top = (*top)->pre;
-	myfree(tmp);
+		to_return = (*top)->data;
+		tmp = *top;
+		*top = (*top)->pre;
+		myfree(tmp);
 
-	return to_return;
+		return to_return;
+	}
 
 }
 

@@ -5,12 +5,14 @@
         target: A driver of using stack
         Author: Chiu-Hsin Lo
         Date: 2015.10.09
-        Version: 1.0.0
+        Version: 1.1.0
         method: push    Push node with next input value.
 
                 pop     Pop the top node from stack.
 
                 q       Quit.
+	
+	1.1.0 prevent buffer overflow from input
 
 ===========================================================*/
 #include "stack.c"
@@ -18,7 +20,8 @@
 
 int main(){
 
-	char commend[10];//recieve input commend
+	char* tmp_commend = NULL;//recieve input commend
+	char commend[10];
 	DATA_TYPE v;//recieve input data
 	node* top;//top pointer
 	top = NULL;//initialize
@@ -26,7 +29,21 @@ int main(){
 	while(1){
 		//output hint
 		printf("\tEnter push or pop, q is to leave.\n");
-		scanf("%s", commend);//recieve cmd
+
+		if(scanf("%as", &tmp_commend)){
+			if(strlen(tmp_commend) > 9){
+				printf("Commend not found!!\n");	
+				continue;
+			}
+			strcpy(commend,tmp_commend);
+			myfree(tmp_commend);
+			//todo string copy
+
+			
+		}else{
+			printf("Aalloction fail!\n");
+			exit(1);
+		}
 		//to push
 		if(!strcmp(commend,"push")){
 			printf("\tEnter a value to push to the stack\n");
